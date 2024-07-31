@@ -8,7 +8,7 @@ class Solution {
         a = find(a);
         b = find(b);
 
-        // a의 부모노드가 더 b의 부모노드보다 크면 parent[a] = b 아니면 반대
+        //대소비교하여 작은 수가 큰 수의 부모노드가 됨.
         if(a>b)
             parent[a] = b;
         else parent[b] = a;
@@ -21,6 +21,8 @@ class Solution {
     
     public int solution(int n, int[][] costs) {
         int answer = 0;
+
+        // 간선을 기준으로 오름차순 정렬 실행
         Arrays.sort(costs, (o1, o2) -> Integer.compare(o1[2], o2[2]));
 
         for(int i=0;i<costs.length;i++){
@@ -36,6 +38,7 @@ class Solution {
 
             // i번째 노드들의 부모노드가 같지 않으면 다른 집합임을 의미.
             if(find(costs[i][0]) != find(costs[i][1])){
+                // 엮어도 순환이 되지 않는다면 하나의 집합으로 만들기
                 union(find(costs[i][0]), find(costs[i][1]));
                 answer += costs[i][2];
                 continue;
