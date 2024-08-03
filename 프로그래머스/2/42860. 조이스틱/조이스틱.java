@@ -14,6 +14,7 @@ class Solution {
             n = i + 1;
             while(n < name.length() && name.charAt(n) == 'A')
                 n+=1;
+            // 오른쪽부터 i만큼 갔다가 돌아오면 i*2이고 A를 마주하지 않은 만큼 왼쪽으로 가기 그 밑 코드는 반대
             move = Math.min(move, i * 2 + name.length() - n);
             move = Math.min(move, (name.length() - n) * 2 + i);
 
