@@ -14,7 +14,7 @@ class Solution {
         if(first >= k)
             return 0;
         while(!q.isEmpty()){
-            int size = q.size(); // -1을 위한 사이즈 얻기
+            int size = q.size(); // -1을 위한 사이즈 얻는다.
             
             int n1 = q.poll();
             if(n1 >= k){
