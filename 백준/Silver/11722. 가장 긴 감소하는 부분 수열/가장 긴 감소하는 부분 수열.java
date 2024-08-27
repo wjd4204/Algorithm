@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -31,5 +30,8 @@ public class Main {
         }
 
         System.out.println(result);
+        
+        br.close();
+        bw.close();
     }
 }
