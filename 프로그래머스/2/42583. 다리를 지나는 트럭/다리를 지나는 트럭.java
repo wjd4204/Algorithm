@@ -15,6 +15,7 @@ class Solution {
 //        System.out.println(list);
 //        System.out.println(bridge);
 
+        // 다리에 있는 트럭 무게를 매 반복마다 확인
         int sum = 0;
         int answer = 0;
         while(result.size() != truck_weights.length){
