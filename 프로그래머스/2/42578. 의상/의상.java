@@ -1,24 +1,21 @@
-import java.util.HashMap;
+import java.util.*;
 
 class Solution {
     public int solution(String[][] clothes) {
-        HashMap<String, Integer> sort = new HashMap<>();
-
-        for(int i=0;i< clothes.length;i++){
-            if(!sort.containsKey(clothes[i][1])){
-                sort.put(clothes[i][1], 1);
-            }
-            else{
-                Integer num = sort.get(clothes[i][1]);
-                sort.replace(clothes[i][1], num+1);
-            }
-        }
-
-        int result = 1;
-        for(String key : sort.keySet()){
-            result = result * (sort.get(key)+1);
+        int answer = 1;
+        
+        // for문을 hashmap만큼의 크기만큼 반복
+        // 그 안에서 매번 끝까지 가는 형태로 곱해서 더함.
+        HashMap<String, Integer> cloth = new HashMap<>();
+        for(int i=0;i<clothes.length;i++){
+            cloth.put(clothes[i][1], cloth.getOrDefault(clothes[i][1], 1) + 1);
         }
         
-        return result-1;
+        for(String key : cloth.keySet()){
+            answer *= cloth.get(key);
+        }
+        answer -= 1;
+        
+        return answer;
     }
 }
