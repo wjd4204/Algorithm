@@ -3,27 +3,29 @@ import java.util.*;
 class Solution {
     
     static int answer = 0;
-    static boolean[] visited;
     
     public int solution(int[] numbers, int target) {
-        visited = new boolean[numbers.length];
         
-        DFS(0, numbers, 0, target);
+        
+        dfs(0, 0, numbers,target);
         
         return answer;
     }
     
-    public void DFS(int index, int[] numbers, int sum, int target){
-        if(index == numbers.length){
-            if(sum == target)
-                answer+=1;
+    public void dfs(int i, int sum, int[] numbers, int target){
+        if(sum == target && i == numbers.length){
+            answer+=1;
             return;
         }
         
-        int next = index+1;
+        if(i == numbers.length)
+            return;
         
-        DFS(next, numbers, sum+numbers[index], target);
-        DFS(next, numbers, sum-numbers[index], target);
+        int num = numbers[i];
+        //System.out.println(i + " " + sum);
+        dfs(i+1, sum + num, numbers, target);
+        dfs(i+1, sum - num, numbers, target);
         
     }
+    
 }
