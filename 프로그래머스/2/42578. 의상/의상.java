@@ -4,18 +4,19 @@ class Solution {
     public int solution(String[][] clothes) {
         int answer = 1;
         
-        // for문을 hashmap만큼의 크기만큼 반복
-        // 그 안에서 매번 끝까지 가는 형태로 곱해서 더함.
-        HashMap<String, Integer> cloth = new HashMap<>();
+        HashMap<String, Integer> hm = new HashMap<>();
         for(int i=0;i<clothes.length;i++){
-            cloth.put(clothes[i][1], cloth.getOrDefault(clothes[i][1], 1) + 1);
+            hm.put(clothes[i][1], hm.getOrDefault(clothes[i][1], 0)+1);
         }
         
-        for(String key : cloth.keySet()){
-            answer *= cloth.get(key);
+        System.out.println(hm);
+        for(String s : hm.keySet()){
+            answer *= (hm.get(s) + 1);
         }
-        answer -= 1;
+        // if(hm.size() >= 2)
+        //     answer += clothes.length;
         
-        return answer;
+        
+        return answer - 1;
     }
 }
