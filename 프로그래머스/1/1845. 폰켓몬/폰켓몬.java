@@ -4,19 +4,17 @@ class Solution {
     public int solution(int[] nums) {
         
         int result = 0;
-        HashMap<Integer, Integer> type = new HashMap<Integer, Integer>();
-        
+        HashSet<Integer> hs = new HashSet<>();
         for(int i : nums){
-            type.put(i, type.getOrDefault(i, 0)+1);
+            hs.add(i);
         }
         
-        if(type.size() <= nums.length/2){
-            result = type.size();
-        }
-        else{
-            result = nums.length/2;
-        }
+        result = hs.size();
+        if(nums.length / 2 < result)
+            result = nums.length / 2;
         
         return result;
     }
 }
+// 빠른 탐색 요구
+// 가장 많은 종류의 값을 반환
