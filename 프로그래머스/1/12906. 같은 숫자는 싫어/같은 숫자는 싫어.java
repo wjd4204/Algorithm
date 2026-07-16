@@ -3,23 +3,21 @@ import java.util.*;
 public class Solution {
     public int[] solution(int []arr) {
         
-        int num = 10;
-        Queue<Integer> q = new LinkedList<>();
+        Stack<Integer> st = new Stack<>();
         for(int i : arr){
-            if(num != i){
-                q.add(i);
-                num = i;
+            if(st.empty()){
+                st.push(i);
+                continue;
             }
+            int num = st.peek();
+            if(num != i)
+                st.push(i);
         }
-
-        int[] answer = new int[q.size()];
-        int size = q.size();
         
-        for(int i=0;i<size;i++){
-            answer[i] = q.poll();
+        int[] answer = new int[st.size()];
+        for(int i=answer.length-1;i>=0;i--){
+            answer[i] = st.pop();
         }
-
-        
         
         return answer;
     }
