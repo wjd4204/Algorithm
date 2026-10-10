@@ -1,0 +1,23 @@
+-- 코드를 입력하세요
+SELECT 
+    MONTH(START_DATE) AS MONTH, 
+    CAR_ID, 
+    COUNT(HISTORY_ID) AS RECORDS -- CAR_ID 대신 PK나 전체 카운트를 쓰는 것이 안전합니다.
+FROM 
+    CAR_RENTAL_COMPANY_RENTAL_HISTORY
+WHERE 
+    -- 1. 지정된 기간 내의 데이터만 조회 (2022년 8월 ~ 10월)
+    START_DATE BETWEEN '2022-08-01' AND '2022-10-31'
+    -- 2. 해당 기간 동안 총 대여 횟수가 5회 이상인 CAR_ID만 필터링 (서브쿼리)
+    AND CAR_ID IN (
+        SELECT CAR_ID
+        FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
+        WHERE START_DATE BETWEEN '2022-08-01' AND '2022-10-31'
+        GROUP BY CAR_ID
+        HAVING COUNT(CAR_ID) >= 5
+    )
+GROUP BY 
+    MONTH(START_DATE), CAR_ID
+ORDER BY 
+    MONTH ASC, 
+    CAR_ID DESC;
