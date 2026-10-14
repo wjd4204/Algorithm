@@ -1,2 +1,6 @@
 -- 코드를 입력하세요
-SELECT ai.animal_type, count(*) as count from animal_ins as ai group by ai.animal_type order by ai.animal_type;
+SELECT ANIMAL_TYPE, COUNT(*) AS count
+FROM ANIMAL_INS
+WHERE ANIMAL_TYPE IN ('Dog', 'Cat')
+GROUP BY ANIMAL_TYPE
+ORDER BY ANIMAL_TYPE ASC;
