@@ -1,64 +1,67 @@
 import java.util.*;
 
 class Solution {
+    
+    class Song implements Comparable<Song> {
+        int id;
+        int play;
+        
+        public Song(int id, int play){
+            this.id = id;
+            this.play = play;
+        }
+        
+        @Override
+        public int compareTo(Song other){
+            if(this.play == other.play){
+                return Integer.compare(this.id, other.id);
+            }
+            
+            return Integer.compare(other.play, this.play);
+        }
+    }
+    
     public int[] solution(String[] genres, int[] plays) {
-        HashMap<String, Integer> g = new HashMap<>();
-        HashMap<String, Integer> count = new HashMap<>();
-
-        for(int i=0;i<genres.length;i++){
-            g.put(genres[i], g.getOrDefault(genres[i], 0) + plays[i]); // 장르별 총 횟수
-            count.put(genres[i], count.getOrDefault(genres[i], 0) + 1); // 장르별 갯수
+        
+        // 장르 누적합 구하기
+        HashMap<String, Integer> map = new HashMap<>();
+        HashMap<String, List<Song>> songMap = new HashMap<>();
+        for(int i = 0;i<genres.length;i++){
+            String genre = genres[i];
+            int play = plays[i];
+            
+            map.merge(genre, play, Integer::sum); // 장르별 누적합
+            
+            songMap.putIfAbsent(genre, new ArrayList<>());
+            songMap.get(genre).add(new Song(i, play));
         }
-
-        List<String> keySet = new ArrayList<>(g.keySet());
-        keySet.sort((o1, o2) -> g.get(o2).compareTo(g.get(o1)));
-
-        List<Integer> result = new ArrayList<>();
-
-        for(String key : keySet){
-            int cnt = count.get(key);
-            System.out.println(cnt);
-            if(cnt > 2)
-                cnt = 2;
-            int max = 0;
-            int max2 = 0;
-            int maxInd = Integer.MAX_VALUE;
-            int max2Ind = Integer.MAX_VALUE;
-            for(int i=0;i<genres.length;i++){
-                if(genres[i].equals(key)){
-                    if(max==0) {
-                        max = plays[i];
-                        maxInd = i;
-                    }
-                    else{
-                        if(max<plays[i]){
-                            max2 = max;
-                            max2Ind = maxInd;
-                            max = plays[i];
-                            maxInd = i;
-                        }
-                        else{
-                            if(max2 < plays[i]){
-                                max2 = plays[i];
-                                max2Ind = i;
-                            }
-                        }
-                    }
-                }
-            }
-            System.out.println("maxInd : " + maxInd + " maxInd2 : " + max2Ind);
-            if(cnt == 1)
-                result.add(maxInd);
-            else if(cnt == 2) {
-                result.add(maxInd);
-                result.add(max2Ind);
+        
+        // 장르별 노래 정렬하기
+        List<String> genreRank = new ArrayList<>(map.keySet());
+        genreRank.sort((g1, g2) -> Integer.compare(map.get(g2), map.get(g1))
+);
+        
+        // 내놓기
+        List<Integer> list = new ArrayList<>();
+        
+        for(String st : genreRank){
+            List<Song> songs = songMap.get(st);
+            Collections.sort(songs);
+            
+            int count = 0;
+            for(Song s : songs){
+                list.add(s.id);
+                count++;
+                if(count==2)
+                    break;
             }
         }
-
-        int[] answer = new int[result.size()];
-        for(int i=0;i< answer.length;i++){
-            answer[i] = result.get(i);
+        
+        int[] answer = new int[list.size()];
+        for(int i=0;i<list.size();i++){
+            answer[i] = list.get(i);
         }
+        
         
         return answer;
     }
