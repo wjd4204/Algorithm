@@ -1,21 +1,24 @@
 import java.util.*;
-
+// 10:46
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
         int[] answer = new int[commands.length];
-        for(int i=0;i< commands.length;i++){
-            int start = commands[i][0];
+        
+        for(int i=0;i<commands.length;i++){
             int end = commands[i][1];
-            int ind = commands[i][2];
-
-            List<Integer> list = new ArrayList<>();
-            for(int j=start-1;j <= end-1 ;j++){
-                list.add(array[j]);
+            int start = commands[i][0];
+            int[] arr = new int[end-start+1];
+            
+            for(int j=start-1;j<end;j++){
+                arr[j-(start-1)] = array[j];
             }
-            Collections.sort(list);
-            answer[i] = list.get(ind-1);
+            
+            Arrays.sort(arr);
+            answer[i] = arr[commands[i][2]-1];
         }
         
         return answer;
     }
 }
+
+// 10:52
